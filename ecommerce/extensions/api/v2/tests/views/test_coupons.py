@@ -50,13 +50,6 @@ Voucher = get_model('voucher', 'Voucher')
 COUPONS_LINK = reverse('api:v2:coupons-list')
 ENTERPRISE_COUPONS_LINK = reverse('api:v2:enterprise-coupons-list')
 COUPON_CATEGORY_NAME = 'Coupons'
-TEST_CATEGORIES = ['Financial Assistance', 'Partner No Rev - RAP', 'Geography Promotion', 'Marketing Partner Promotion',
-                   'Upsell Promotion', 'edX Employee Request', 'Course Promotion', 'Partner No Rev - ORAP',
-                   'Services-Other', 'Partner No Rev - Upon Redemption', 'Bulk Enrollment - Prepay', 'Support-Other',
-                   'ConnectEd', 'Marketing-Other', 'Affiliate Promotion', 'Retention Promotion',
-                   'Partner No Rev - Prepay', 'Paid Cohort', 'Bulk Enrollment - Integration', 'On-Campus Learners',
-                   'Security Disclosure Reward', 'Other', 'Customer Service', 'Bulk Enrollment - Upon Redemption',
-                   'B2B Affiliate Promotion']
 
 
 @httpretty.activate
@@ -1302,15 +1295,6 @@ class CouponCategoriesListViewTests(TestCase):
         super(CouponCategoriesListViewTests, self).setUp()
         self.user = self.create_user()
         self.client.login(username=self.user.username, password=self.password)
-
-    def test_category_list(self):
-        """ Verify the endpoint returns successfully. """
-        response = self.client.get(self.path + '?page_size=200')
-        response_data = response.json()
-        self.assertEqual(response_data['count'], 25)
-        received_coupon_categories = {category['name'] for category in response_data['results']}
-        for category in TEST_CATEGORIES:
-            self.assertTrue(category in received_coupon_categories)
 
     def test_deprecated_category_filtering(self):
         """ Verify the endpoint doesn't return deprecated coupon categories. """
