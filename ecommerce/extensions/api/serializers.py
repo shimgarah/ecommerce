@@ -1770,6 +1770,9 @@ class CouponCodeRevokeSerializer(CouponCodeMixin, serializers.Serializer):  # py
         offer_assignments = validated_data.get('offer_assignments')
         email = validated_data.get('email')
         code = validated_data.get('code')
+
+        # `not` is used here to avoid double negative in the if condition in the code ahead.
+        # `should_send_revoke_email` shows whether a new email will be sent or not.
         should_send_revoke_email = not validated_data.get('do_not_email')
 
         subject = self.context.get('subject')

@@ -808,8 +808,7 @@ class EnterpriseCouponViewSet(CouponViewSet):
         )
         if serializer.is_valid():
             serializer.save()
-            should_send_revoke_email = not do_not_email
-            if should_send_revoke_email:
+            if not do_not_email:
                 # Create a record of the email sent
                 self._create_offer_assignment_email_sent_record(enterprise_customer, REVOKE, template)
 
